@@ -7,7 +7,8 @@ import 'package:netflixclone/screen/home_screen/screen_home.dart';
 import 'package:netflixclone/screen/search/screen_search.dart';
 
 class ScreenDash extends StatefulWidget {
-  const ScreenDash({Key? key}) : super(key: key);
+  final String coverimg;
+  const ScreenDash({required this.coverimg, Key? key}) : super(key: key);
 
   @override
   State<ScreenDash> createState() => _ScreenDashState();
@@ -18,7 +19,7 @@ class _ScreenDashState extends State<ScreenDash> {
   @override
   Widget build(BuildContext context) {
     final _pages = [
-      const ScreenHome(),
+      ScreenHome(coverImg: widget.coverimg),
       const ScreenComing(),
       const ScreenSearch(),
       const ScreenDownload(),

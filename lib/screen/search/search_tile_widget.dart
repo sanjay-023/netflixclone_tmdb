@@ -1,15 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:netflixclone/Api/api.dart';
 import 'package:netflixclone/common_widget/common_widgets.dart';
-import 'package:netflixclone/json/search_json.dart';
+import 'package:netflixclone/movie_details/movie_details.dart';
 
-class SearchTileWidget extends StatelessWidget {
+class SearchTileWidget extends StatefulWidget {
   const SearchTileWidget({Key? key}) : super(key: key);
+
+  @override
+  State<SearchTileWidget> createState() => _SearchTileWidgetState();
+}
+
+class _SearchTileWidgetState extends State<SearchTileWidget> {
+  List<MovieDetails> movieList = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    populateAllMovie();
+  }
+
+  void populateAllMovie() async {
+    final movies = await fetchAllMovie(category: 'top_rated');
+    setState(() {
+      movieList = movies;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Column(
-      children: List.generate(searchJson.length, (index) {
+      children: List.generate(movieList.length, (index) {
         return Padding(
           padding: const EdgeInsets.only(bottom: 10),
           child: Row(
@@ -25,7 +47,8 @@ class SearchTileWidget extends StatelessWidget {
                           height: 70,
                           decoration: BoxDecoration(
                               image: DecorationImage(
-                                  image: AssetImage(searchJson[index]['img']),
+                                  image: NetworkImage(
+                                      "https://image.tmdb.org/t/p/w500${movieList[index].backdropPath}"),
                                   fit: BoxFit.cover))),
                     ],
                   ),
@@ -33,7 +56,7 @@ class SearchTileWidget extends StatelessWidget {
                   SizedBox(
                     width: (size.width - 36) * 0.4,
                     child: Text(
-                      searchJson[index]['title'],
+                      movieList[index].title!,
                       style: const TextStyle(
                           color: Colors.white,
                           fontSize: 15,

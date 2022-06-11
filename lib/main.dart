@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:netflixclone/screen/home_screen/screen_dash.dart';
+import 'package:netflixclone/screen/splash_screen/splash_screen.dart';
 
 void main(List<String> args) {
   runApp(const MyApp());
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: ScreenDash(),
+      home: ScreenSplash(),
     );
   }
 }

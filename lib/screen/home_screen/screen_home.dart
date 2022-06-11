@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:netflixclone/Api/api.dart';
 import 'package:netflixclone/common_widget/common_widgets.dart';
+import 'package:netflixclone/movie_details/movie_details.dart';
 import 'package:netflixclone/screen/home_screen/category_widget.dart';
 import 'package:netflixclone/screen/home_screen/gradient.dart';
 import 'package:netflixclone/screen/home_screen/home_button.dart';
@@ -7,8 +9,30 @@ import 'package:netflixclone/screen/home_screen/my_list.dart';
 import 'package:netflixclone/screen/home_screen/popular.dart';
 import 'package:netflixclone/screen/home_screen/trending.dart';
 
-class ScreenHome extends StatelessWidget {
-  const ScreenHome({Key? key}) : super(key: key);
+class ScreenHome extends StatefulWidget {
+  final String coverImg;
+  const ScreenHome({required this.coverImg, Key? key}) : super(key: key);
+
+  @override
+  State<ScreenHome> createState() => _ScreenHomeState();
+}
+
+class _ScreenHomeState extends State<ScreenHome> {
+  List<MovieDetails> movieList = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    populateAllMovie();
+  }
+
+  void populateAllMovie() async {
+    final movies = await fetchAllMovie(category: 'now_playing');
+    setState(() {
+      movieList = movies;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +51,11 @@ class ScreenHome extends StatelessWidget {
                     children: [
                       Container(
                         height: 500,
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                             color: Colors.green,
                             image: DecorationImage(
-                                image: AssetImage(
-                                  'assets/images/img_3.png',
+                                image: NetworkImage(
+                                  widget.coverImg,
                                 ),
                                 fit: BoxFit.cover)),
                       ),
@@ -47,7 +71,7 @@ class ScreenHome extends StatelessWidget {
                         child: Row(
                           children: const [
                             Text(
-                              'My List',
+                              'Now Playing',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
@@ -58,23 +82,6 @@ class ScreenHome extends StatelessWidget {
                       ),
                       heightbox(height: 10.0),
                       const MyList(),
-                      heightbox(height: 30.0),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: Row(
-                          children: const [
-                            Text(
-                              'Popular On Netflix',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                      ),
-                      heightbox(height: 10.0),
-                      const PopularWidget(),
                       heightbox(height: 30.0),
                       Padding(
                         padding: const EdgeInsets.only(left: 20),
@@ -92,6 +99,23 @@ class ScreenHome extends StatelessWidget {
                       ),
                       heightbox(height: 10.0),
                       const TrendingWidget(),
+                      heightbox(height: 30.0),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Row(
+                          children: const [
+                            Text(
+                              'Popular On Netflix',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      ),
+                      heightbox(height: 10.0),
+                      const PopularWidget(),
                     ],
                   )
                 ],
