@@ -48,7 +48,7 @@ class _ScreenSplashState extends State<ScreenSplash> {
     Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (ctx) => ScreenDash(
               coverimg:
-                  "https://image.tmdb.org/t/p/w500${movieList[10].posterPath!}",
+                  "https://image.tmdb.org/t/p/w500${movieList[9].posterPath!}",
             )));
   }
 }

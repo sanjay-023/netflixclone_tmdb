@@ -84,6 +84,24 @@ class ScreenDownload extends StatelessWidget {
                       fontSize: 16),
                   textAlign: TextAlign.center,
                 ),
+                heightbox(height: 20.0),
+                Container(
+                  height: 50,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(6)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text(
+                        'See What You Can Download',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
           )
